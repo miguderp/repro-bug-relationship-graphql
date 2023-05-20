@@ -1,0 +1,1572 @@
+type Query {
+  User(id: String!, draft: Boolean): User
+  Users(where: User_where, draft: Boolean, page: Int, limit: Int, sort: String): Users
+  docAccessUser(id: String!): usersDocAccess
+  meUser: usersMe
+  initializedUser: Boolean
+  Example(id: String!, draft: Boolean): Example
+  Examples(where: Example_where, draft: Boolean, page: Int, limit: Int, sort: String): Examples
+  docAccessExample(id: String!): examplesDocAccess
+  CollectionWithCustomId(id: Int!, draft: Boolean): CollectionWithCustomId
+  CollectionWithCustomIds(where: CollectionWithCustomId_where, draft: Boolean, page: Int, limit: Int, sort: String): CollectionWithCustomIds
+  docAccessCollectionWithCustomId(id: Int!): collection_with_custom_idDocAccess
+  CollectionWithoutCustomId(id: String!, draft: Boolean): CollectionWithoutCustomId
+  CollectionWithoutCustomIds(where: CollectionWithoutCustomId_where, draft: Boolean, page: Int, limit: Int, sort: String): CollectionWithoutCustomIds
+  docAccessCollectionWithoutCustomId(id: String!): collection_without_custom_idDocAccess
+  Preference(key: String): Preference
+  Access: Access
+}
+
+type User {
+  id: String
+  updatedAt: DateTime
+  createdAt: DateTime
+  email: EmailAddress
+  resetPasswordToken: String
+  resetPasswordExpiration: DateTime
+  loginAttempts: Float
+  lockUntil: DateTime
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+"""
+A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
+"""
+scalar EmailAddress @specifiedBy(url: "https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address")
+
+type Users {
+  docs: [User]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input User_where {
+  updatedAt: User_updatedAt_operator
+  createdAt: User_createdAt_operator
+  email: User_email_operator
+  id: User_id_operator
+  OR: [User_where_or]
+  AND: [User_where_and]
+}
+
+input User_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input User_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input User_email_operator {
+  equals: EmailAddress
+  not_equals: EmailAddress
+  like: EmailAddress
+  contains: EmailAddress
+  in: [EmailAddress]
+  not_in: [EmailAddress]
+  all: [EmailAddress]
+  exists: Boolean
+}
+
+input User_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+input User_where_or {
+  updatedAt: User_updatedAt_operator
+  createdAt: User_createdAt_operator
+  email: User_email_operator
+  id: User_id_operator
+}
+
+input User_where_and {
+  updatedAt: User_updatedAt_operator
+  createdAt: User_createdAt_operator
+  email: User_email_operator
+  id: User_id_operator
+}
+
+type usersDocAccess {
+  fields: UsersDocAccessFields
+  create: UsersCreateDocAccess
+  read: UsersReadDocAccess
+  update: UsersUpdateDocAccess
+  delete: UsersDeleteDocAccess
+  unlock: UsersUnlockDocAccess
+}
+
+type UsersDocAccessFields {
+  updatedAt: UsersDocAccessFields_updatedAt
+  createdAt: UsersDocAccessFields_createdAt
+  email: UsersDocAccessFields_email
+  password: UsersDocAccessFields_password
+}
+
+type UsersDocAccessFields_updatedAt {
+  create: UsersDocAccessFields_updatedAt_Create
+  read: UsersDocAccessFields_updatedAt_Read
+  update: UsersDocAccessFields_updatedAt_Update
+  delete: UsersDocAccessFields_updatedAt_Delete
+}
+
+type UsersDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt {
+  create: UsersDocAccessFields_createdAt_Create
+  read: UsersDocAccessFields_createdAt_Read
+  update: UsersDocAccessFields_createdAt_Update
+  delete: UsersDocAccessFields_createdAt_Delete
+}
+
+type UsersDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email {
+  create: UsersDocAccessFields_email_Create
+  read: UsersDocAccessFields_email_Read
+  update: UsersDocAccessFields_email_Update
+  delete: UsersDocAccessFields_email_Delete
+}
+
+type UsersDocAccessFields_email_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password {
+  create: UsersDocAccessFields_password_Create
+  read: UsersDocAccessFields_password_Read
+  update: UsersDocAccessFields_password_Update
+  delete: UsersDocAccessFields_password_Delete
+}
+
+type UsersDocAccessFields_password_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password_Delete {
+  permission: Boolean!
+}
+
+type UsersCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+type UsersReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUnlockDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type usersMe {
+  token: String
+  user: User
+  exp: Int
+  collection: String
+}
+
+type Example {
+  id: String
+  relation_that_works_in_graphql: CollectionWithoutCustomId
+  relation_that_does_not_work_in_graphql: CollectionWithCustomId
+  someField: String
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type CollectionWithoutCustomId {
+  id: String
+  someField: String
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type CollectionWithCustomId {
+  id: Float!
+  someField: String
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type Examples {
+  docs: [Example]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input Example_where {
+  relation_that_works_in_graphql: Example_relation_that_works_in_graphql_operator
+  relation_that_does_not_work_in_graphql: Example_relation_that_does_not_work_in_graphql_operator
+  someField: Example_someField_operator
+  updatedAt: Example_updatedAt_operator
+  createdAt: Example_createdAt_operator
+  id: Example_id_operator
+  OR: [Example_where_or]
+  AND: [Example_where_and]
+}
+
+input Example_relation_that_works_in_graphql_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Example_relation_that_does_not_work_in_graphql_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Example_someField_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Example_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Example_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Example_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Example_where_or {
+  relation_that_works_in_graphql: Example_relation_that_works_in_graphql_operator
+  relation_that_does_not_work_in_graphql: Example_relation_that_does_not_work_in_graphql_operator
+  someField: Example_someField_operator
+  updatedAt: Example_updatedAt_operator
+  createdAt: Example_createdAt_operator
+  id: Example_id_operator
+}
+
+input Example_where_and {
+  relation_that_works_in_graphql: Example_relation_that_works_in_graphql_operator
+  relation_that_does_not_work_in_graphql: Example_relation_that_does_not_work_in_graphql_operator
+  someField: Example_someField_operator
+  updatedAt: Example_updatedAt_operator
+  createdAt: Example_createdAt_operator
+  id: Example_id_operator
+}
+
+type examplesDocAccess {
+  fields: ExamplesDocAccessFields
+  create: ExamplesCreateDocAccess
+  read: ExamplesReadDocAccess
+  update: ExamplesUpdateDocAccess
+  delete: ExamplesDeleteDocAccess
+}
+
+type ExamplesDocAccessFields {
+  relation_that_works_in_graphql: ExamplesDocAccessFields_relation_that_works_in_graphql
+  relation_that_does_not_work_in_graphql: ExamplesDocAccessFields_relation_that_does_not_work_in_graphql
+  someField: ExamplesDocAccessFields_someField
+  updatedAt: ExamplesDocAccessFields_updatedAt
+  createdAt: ExamplesDocAccessFields_createdAt
+}
+
+type ExamplesDocAccessFields_relation_that_works_in_graphql {
+  create: ExamplesDocAccessFields_relation_that_works_in_graphql_Create
+  read: ExamplesDocAccessFields_relation_that_works_in_graphql_Read
+  update: ExamplesDocAccessFields_relation_that_works_in_graphql_Update
+  delete: ExamplesDocAccessFields_relation_that_works_in_graphql_Delete
+}
+
+type ExamplesDocAccessFields_relation_that_works_in_graphql_Create {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_relation_that_works_in_graphql_Read {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_relation_that_works_in_graphql_Update {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_relation_that_works_in_graphql_Delete {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_relation_that_does_not_work_in_graphql {
+  create: ExamplesDocAccessFields_relation_that_does_not_work_in_graphql_Create
+  read: ExamplesDocAccessFields_relation_that_does_not_work_in_graphql_Read
+  update: ExamplesDocAccessFields_relation_that_does_not_work_in_graphql_Update
+  delete: ExamplesDocAccessFields_relation_that_does_not_work_in_graphql_Delete
+}
+
+type ExamplesDocAccessFields_relation_that_does_not_work_in_graphql_Create {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_relation_that_does_not_work_in_graphql_Read {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_relation_that_does_not_work_in_graphql_Update {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_relation_that_does_not_work_in_graphql_Delete {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_someField {
+  create: ExamplesDocAccessFields_someField_Create
+  read: ExamplesDocAccessFields_someField_Read
+  update: ExamplesDocAccessFields_someField_Update
+  delete: ExamplesDocAccessFields_someField_Delete
+}
+
+type ExamplesDocAccessFields_someField_Create {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_someField_Read {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_someField_Update {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_someField_Delete {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_updatedAt {
+  create: ExamplesDocAccessFields_updatedAt_Create
+  read: ExamplesDocAccessFields_updatedAt_Read
+  update: ExamplesDocAccessFields_updatedAt_Update
+  delete: ExamplesDocAccessFields_updatedAt_Delete
+}
+
+type ExamplesDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_createdAt {
+  create: ExamplesDocAccessFields_createdAt_Create
+  read: ExamplesDocAccessFields_createdAt_Read
+  update: ExamplesDocAccessFields_createdAt_Update
+  delete: ExamplesDocAccessFields_createdAt_Delete
+}
+
+type ExamplesDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type ExamplesDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type ExamplesCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ExamplesReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ExamplesUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ExamplesDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithCustomIds {
+  docs: [CollectionWithCustomId]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input CollectionWithCustomId_where {
+  id: CollectionWithCustomId_id_operator
+  someField: CollectionWithCustomId_someField_operator
+  updatedAt: CollectionWithCustomId_updatedAt_operator
+  createdAt: CollectionWithCustomId_createdAt_operator
+  OR: [CollectionWithCustomId_where_or]
+  AND: [CollectionWithCustomId_where_and]
+}
+
+input CollectionWithCustomId_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input CollectionWithCustomId_someField_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input CollectionWithCustomId_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input CollectionWithCustomId_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input CollectionWithCustomId_where_or {
+  id: CollectionWithCustomId_id_operator
+  someField: CollectionWithCustomId_someField_operator
+  updatedAt: CollectionWithCustomId_updatedAt_operator
+  createdAt: CollectionWithCustomId_createdAt_operator
+}
+
+input CollectionWithCustomId_where_and {
+  id: CollectionWithCustomId_id_operator
+  someField: CollectionWithCustomId_someField_operator
+  updatedAt: CollectionWithCustomId_updatedAt_operator
+  createdAt: CollectionWithCustomId_createdAt_operator
+}
+
+type collection_with_custom_idDocAccess {
+  fields: CollectionWithCustomIdDocAccessFields
+  create: CollectionWithCustomIdCreateDocAccess
+  read: CollectionWithCustomIdReadDocAccess
+  update: CollectionWithCustomIdUpdateDocAccess
+  delete: CollectionWithCustomIdDeleteDocAccess
+}
+
+type CollectionWithCustomIdDocAccessFields {
+  id: CollectionWithCustomIdDocAccessFields_id
+  someField: CollectionWithCustomIdDocAccessFields_someField
+  updatedAt: CollectionWithCustomIdDocAccessFields_updatedAt
+  createdAt: CollectionWithCustomIdDocAccessFields_createdAt
+}
+
+type CollectionWithCustomIdDocAccessFields_id {
+  create: CollectionWithCustomIdDocAccessFields_id_Create
+  read: CollectionWithCustomIdDocAccessFields_id_Read
+  update: CollectionWithCustomIdDocAccessFields_id_Update
+  delete: CollectionWithCustomIdDocAccessFields_id_Delete
+}
+
+type CollectionWithCustomIdDocAccessFields_id_Create {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_id_Read {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_id_Update {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_id_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_someField {
+  create: CollectionWithCustomIdDocAccessFields_someField_Create
+  read: CollectionWithCustomIdDocAccessFields_someField_Read
+  update: CollectionWithCustomIdDocAccessFields_someField_Update
+  delete: CollectionWithCustomIdDocAccessFields_someField_Delete
+}
+
+type CollectionWithCustomIdDocAccessFields_someField_Create {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_someField_Read {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_someField_Update {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_someField_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_updatedAt {
+  create: CollectionWithCustomIdDocAccessFields_updatedAt_Create
+  read: CollectionWithCustomIdDocAccessFields_updatedAt_Read
+  update: CollectionWithCustomIdDocAccessFields_updatedAt_Update
+  delete: CollectionWithCustomIdDocAccessFields_updatedAt_Delete
+}
+
+type CollectionWithCustomIdDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_createdAt {
+  create: CollectionWithCustomIdDocAccessFields_createdAt_Create
+  read: CollectionWithCustomIdDocAccessFields_createdAt_Read
+  update: CollectionWithCustomIdDocAccessFields_createdAt_Update
+  delete: CollectionWithCustomIdDocAccessFields_createdAt_Delete
+}
+
+type CollectionWithCustomIdDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithCustomIdReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithCustomIdUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithCustomIdDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithoutCustomIds {
+  docs: [CollectionWithoutCustomId]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input CollectionWithoutCustomId_where {
+  someField: CollectionWithoutCustomId_someField_operator
+  updatedAt: CollectionWithoutCustomId_updatedAt_operator
+  createdAt: CollectionWithoutCustomId_createdAt_operator
+  id: CollectionWithoutCustomId_id_operator
+  OR: [CollectionWithoutCustomId_where_or]
+  AND: [CollectionWithoutCustomId_where_and]
+}
+
+input CollectionWithoutCustomId_someField_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input CollectionWithoutCustomId_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input CollectionWithoutCustomId_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input CollectionWithoutCustomId_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input CollectionWithoutCustomId_where_or {
+  someField: CollectionWithoutCustomId_someField_operator
+  updatedAt: CollectionWithoutCustomId_updatedAt_operator
+  createdAt: CollectionWithoutCustomId_createdAt_operator
+  id: CollectionWithoutCustomId_id_operator
+}
+
+input CollectionWithoutCustomId_where_and {
+  someField: CollectionWithoutCustomId_someField_operator
+  updatedAt: CollectionWithoutCustomId_updatedAt_operator
+  createdAt: CollectionWithoutCustomId_createdAt_operator
+  id: CollectionWithoutCustomId_id_operator
+}
+
+type collection_without_custom_idDocAccess {
+  fields: CollectionWithoutCustomIdDocAccessFields
+  create: CollectionWithoutCustomIdCreateDocAccess
+  read: CollectionWithoutCustomIdReadDocAccess
+  update: CollectionWithoutCustomIdUpdateDocAccess
+  delete: CollectionWithoutCustomIdDeleteDocAccess
+}
+
+type CollectionWithoutCustomIdDocAccessFields {
+  someField: CollectionWithoutCustomIdDocAccessFields_someField
+  updatedAt: CollectionWithoutCustomIdDocAccessFields_updatedAt
+  createdAt: CollectionWithoutCustomIdDocAccessFields_createdAt
+}
+
+type CollectionWithoutCustomIdDocAccessFields_someField {
+  create: CollectionWithoutCustomIdDocAccessFields_someField_Create
+  read: CollectionWithoutCustomIdDocAccessFields_someField_Read
+  update: CollectionWithoutCustomIdDocAccessFields_someField_Update
+  delete: CollectionWithoutCustomIdDocAccessFields_someField_Delete
+}
+
+type CollectionWithoutCustomIdDocAccessFields_someField_Create {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdDocAccessFields_someField_Read {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdDocAccessFields_someField_Update {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdDocAccessFields_someField_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdDocAccessFields_updatedAt {
+  create: CollectionWithoutCustomIdDocAccessFields_updatedAt_Create
+  read: CollectionWithoutCustomIdDocAccessFields_updatedAt_Read
+  update: CollectionWithoutCustomIdDocAccessFields_updatedAt_Update
+  delete: CollectionWithoutCustomIdDocAccessFields_updatedAt_Delete
+}
+
+type CollectionWithoutCustomIdDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdDocAccessFields_createdAt {
+  create: CollectionWithoutCustomIdDocAccessFields_createdAt_Create
+  read: CollectionWithoutCustomIdDocAccessFields_createdAt_Read
+  update: CollectionWithoutCustomIdDocAccessFields_createdAt_Update
+  delete: CollectionWithoutCustomIdDocAccessFields_createdAt_Delete
+}
+
+type CollectionWithoutCustomIdDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithoutCustomIdReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithoutCustomIdUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithoutCustomIdDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Preference {
+  key: String!
+  value: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Access {
+  canAccessAdmin: Boolean!
+  users: usersAccess
+  examples: examplesAccess
+  collection_with_custom_id: collection_with_custom_idAccess
+  collection_without_custom_id: collection_without_custom_idAccess
+}
+
+type usersAccess {
+  fields: UsersFields
+  create: UsersCreateAccess
+  read: UsersReadAccess
+  update: UsersUpdateAccess
+  delete: UsersDeleteAccess
+  unlock: UsersUnlockAccess
+}
+
+type UsersFields {
+  updatedAt: UsersFields_updatedAt
+  createdAt: UsersFields_createdAt
+  email: UsersFields_email
+  password: UsersFields_password
+}
+
+type UsersFields_updatedAt {
+  create: UsersFields_updatedAt_Create
+  read: UsersFields_updatedAt_Read
+  update: UsersFields_updatedAt_Update
+  delete: UsersFields_updatedAt_Delete
+}
+
+type UsersFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type UsersFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type UsersFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type UsersFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt {
+  create: UsersFields_createdAt_Create
+  read: UsersFields_createdAt_Read
+  update: UsersFields_createdAt_Update
+  delete: UsersFields_createdAt_Delete
+}
+
+type UsersFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_email {
+  create: UsersFields_email_Create
+  read: UsersFields_email_Read
+  update: UsersFields_email_Update
+  delete: UsersFields_email_Delete
+}
+
+type UsersFields_email_Create {
+  permission: Boolean!
+}
+
+type UsersFields_email_Read {
+  permission: Boolean!
+}
+
+type UsersFields_email_Update {
+  permission: Boolean!
+}
+
+type UsersFields_email_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_password {
+  create: UsersFields_password_Create
+  read: UsersFields_password_Read
+  update: UsersFields_password_Update
+  delete: UsersFields_password_Delete
+}
+
+type UsersFields_password_Create {
+  permission: Boolean!
+}
+
+type UsersFields_password_Read {
+  permission: Boolean!
+}
+
+type UsersFields_password_Update {
+  permission: Boolean!
+}
+
+type UsersFields_password_Delete {
+  permission: Boolean!
+}
+
+type UsersCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUnlockAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type examplesAccess {
+  fields: ExamplesFields
+  create: ExamplesCreateAccess
+  read: ExamplesReadAccess
+  update: ExamplesUpdateAccess
+  delete: ExamplesDeleteAccess
+}
+
+type ExamplesFields {
+  relation_that_works_in_graphql: ExamplesFields_relation_that_works_in_graphql
+  relation_that_does_not_work_in_graphql: ExamplesFields_relation_that_does_not_work_in_graphql
+  someField: ExamplesFields_someField
+  updatedAt: ExamplesFields_updatedAt
+  createdAt: ExamplesFields_createdAt
+}
+
+type ExamplesFields_relation_that_works_in_graphql {
+  create: ExamplesFields_relation_that_works_in_graphql_Create
+  read: ExamplesFields_relation_that_works_in_graphql_Read
+  update: ExamplesFields_relation_that_works_in_graphql_Update
+  delete: ExamplesFields_relation_that_works_in_graphql_Delete
+}
+
+type ExamplesFields_relation_that_works_in_graphql_Create {
+  permission: Boolean!
+}
+
+type ExamplesFields_relation_that_works_in_graphql_Read {
+  permission: Boolean!
+}
+
+type ExamplesFields_relation_that_works_in_graphql_Update {
+  permission: Boolean!
+}
+
+type ExamplesFields_relation_that_works_in_graphql_Delete {
+  permission: Boolean!
+}
+
+type ExamplesFields_relation_that_does_not_work_in_graphql {
+  create: ExamplesFields_relation_that_does_not_work_in_graphql_Create
+  read: ExamplesFields_relation_that_does_not_work_in_graphql_Read
+  update: ExamplesFields_relation_that_does_not_work_in_graphql_Update
+  delete: ExamplesFields_relation_that_does_not_work_in_graphql_Delete
+}
+
+type ExamplesFields_relation_that_does_not_work_in_graphql_Create {
+  permission: Boolean!
+}
+
+type ExamplesFields_relation_that_does_not_work_in_graphql_Read {
+  permission: Boolean!
+}
+
+type ExamplesFields_relation_that_does_not_work_in_graphql_Update {
+  permission: Boolean!
+}
+
+type ExamplesFields_relation_that_does_not_work_in_graphql_Delete {
+  permission: Boolean!
+}
+
+type ExamplesFields_someField {
+  create: ExamplesFields_someField_Create
+  read: ExamplesFields_someField_Read
+  update: ExamplesFields_someField_Update
+  delete: ExamplesFields_someField_Delete
+}
+
+type ExamplesFields_someField_Create {
+  permission: Boolean!
+}
+
+type ExamplesFields_someField_Read {
+  permission: Boolean!
+}
+
+type ExamplesFields_someField_Update {
+  permission: Boolean!
+}
+
+type ExamplesFields_someField_Delete {
+  permission: Boolean!
+}
+
+type ExamplesFields_updatedAt {
+  create: ExamplesFields_updatedAt_Create
+  read: ExamplesFields_updatedAt_Read
+  update: ExamplesFields_updatedAt_Update
+  delete: ExamplesFields_updatedAt_Delete
+}
+
+type ExamplesFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type ExamplesFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type ExamplesFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type ExamplesFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type ExamplesFields_createdAt {
+  create: ExamplesFields_createdAt_Create
+  read: ExamplesFields_createdAt_Read
+  update: ExamplesFields_createdAt_Update
+  delete: ExamplesFields_createdAt_Delete
+}
+
+type ExamplesFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type ExamplesFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type ExamplesFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type ExamplesFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type ExamplesCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ExamplesReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ExamplesUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ExamplesDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type collection_with_custom_idAccess {
+  fields: CollectionWithCustomIdFields
+  create: CollectionWithCustomIdCreateAccess
+  read: CollectionWithCustomIdReadAccess
+  update: CollectionWithCustomIdUpdateAccess
+  delete: CollectionWithCustomIdDeleteAccess
+}
+
+type CollectionWithCustomIdFields {
+  id: CollectionWithCustomIdFields_id
+  someField: CollectionWithCustomIdFields_someField
+  updatedAt: CollectionWithCustomIdFields_updatedAt
+  createdAt: CollectionWithCustomIdFields_createdAt
+}
+
+type CollectionWithCustomIdFields_id {
+  create: CollectionWithCustomIdFields_id_Create
+  read: CollectionWithCustomIdFields_id_Read
+  update: CollectionWithCustomIdFields_id_Update
+  delete: CollectionWithCustomIdFields_id_Delete
+}
+
+type CollectionWithCustomIdFields_id_Create {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_id_Read {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_id_Update {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_id_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_someField {
+  create: CollectionWithCustomIdFields_someField_Create
+  read: CollectionWithCustomIdFields_someField_Read
+  update: CollectionWithCustomIdFields_someField_Update
+  delete: CollectionWithCustomIdFields_someField_Delete
+}
+
+type CollectionWithCustomIdFields_someField_Create {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_someField_Read {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_someField_Update {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_someField_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_updatedAt {
+  create: CollectionWithCustomIdFields_updatedAt_Create
+  read: CollectionWithCustomIdFields_updatedAt_Read
+  update: CollectionWithCustomIdFields_updatedAt_Update
+  delete: CollectionWithCustomIdFields_updatedAt_Delete
+}
+
+type CollectionWithCustomIdFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_createdAt {
+  create: CollectionWithCustomIdFields_createdAt_Create
+  read: CollectionWithCustomIdFields_createdAt_Read
+  update: CollectionWithCustomIdFields_createdAt_Update
+  delete: CollectionWithCustomIdFields_createdAt_Delete
+}
+
+type CollectionWithCustomIdFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithCustomIdCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithCustomIdReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithCustomIdUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithCustomIdDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type collection_without_custom_idAccess {
+  fields: CollectionWithoutCustomIdFields
+  create: CollectionWithoutCustomIdCreateAccess
+  read: CollectionWithoutCustomIdReadAccess
+  update: CollectionWithoutCustomIdUpdateAccess
+  delete: CollectionWithoutCustomIdDeleteAccess
+}
+
+type CollectionWithoutCustomIdFields {
+  someField: CollectionWithoutCustomIdFields_someField
+  updatedAt: CollectionWithoutCustomIdFields_updatedAt
+  createdAt: CollectionWithoutCustomIdFields_createdAt
+}
+
+type CollectionWithoutCustomIdFields_someField {
+  create: CollectionWithoutCustomIdFields_someField_Create
+  read: CollectionWithoutCustomIdFields_someField_Read
+  update: CollectionWithoutCustomIdFields_someField_Update
+  delete: CollectionWithoutCustomIdFields_someField_Delete
+}
+
+type CollectionWithoutCustomIdFields_someField_Create {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdFields_someField_Read {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdFields_someField_Update {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdFields_someField_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdFields_updatedAt {
+  create: CollectionWithoutCustomIdFields_updatedAt_Create
+  read: CollectionWithoutCustomIdFields_updatedAt_Read
+  update: CollectionWithoutCustomIdFields_updatedAt_Update
+  delete: CollectionWithoutCustomIdFields_updatedAt_Delete
+}
+
+type CollectionWithoutCustomIdFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdFields_createdAt {
+  create: CollectionWithoutCustomIdFields_createdAt_Create
+  read: CollectionWithoutCustomIdFields_createdAt_Read
+  update: CollectionWithoutCustomIdFields_createdAt_Update
+  delete: CollectionWithoutCustomIdFields_createdAt_Delete
+}
+
+type CollectionWithoutCustomIdFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CollectionWithoutCustomIdCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithoutCustomIdReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithoutCustomIdUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CollectionWithoutCustomIdDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Mutation {
+  createUser(data: mutationUserInput!, draft: Boolean): User
+  updateUser(id: String!, data: mutationUserUpdateInput!, draft: Boolean, autosave: Boolean): User
+  deleteUser(id: String!): User
+  refreshTokenUser(token: String): usersRefreshedUser
+  logoutUser: String
+  unlockUser(email: String!): Boolean!
+  loginUser(email: String, password: String): usersLoginResult
+  forgotPasswordUser(email: String!, disableEmail: Boolean, expiration: Int): Boolean!
+  resetPasswordUser(token: String, password: String): usersResetPassword
+  verifyEmailUser(token: String): Boolean
+  createExample(data: mutationExampleInput!, draft: Boolean): Example
+  updateExample(id: String!, data: mutationExampleUpdateInput!, draft: Boolean, autosave: Boolean): Example
+  deleteExample(id: String!): Example
+  createCollectionWithCustomId(data: mutationCollectionWithCustomIdInput!, draft: Boolean): CollectionWithCustomId
+  updateCollectionWithCustomId(id: Int!, data: mutationCollectionWithCustomIdUpdateInput!, draft: Boolean, autosave: Boolean): CollectionWithCustomId
+  deleteCollectionWithCustomId(id: Int!): CollectionWithCustomId
+  createCollectionWithoutCustomId(data: mutationCollectionWithoutCustomIdInput!, draft: Boolean): CollectionWithoutCustomId
+  updateCollectionWithoutCustomId(id: String!, data: mutationCollectionWithoutCustomIdUpdateInput!, draft: Boolean, autosave: Boolean): CollectionWithoutCustomId
+  deleteCollectionWithoutCustomId(id: String!): CollectionWithoutCustomId
+  updatePreference(key: String!, value: JSON): Preference
+  deletePreference(key: String!): Preference
+}
+
+input mutationUserInput {
+  updatedAt: String
+  createdAt: String
+  email: String
+  resetPasswordToken: String
+  resetPasswordExpiration: String
+  loginAttempts: Float
+  lockUntil: String
+  password: String!
+}
+
+input mutationUserUpdateInput {
+  updatedAt: String
+  createdAt: String
+  email: String
+  resetPasswordToken: String
+  resetPasswordExpiration: String
+  loginAttempts: Float
+  lockUntil: String
+  password: String
+}
+
+type usersRefreshedUser {
+  user: usersJWT
+  refreshedToken: String
+  exp: Int
+}
+
+type usersJWT {
+  email: EmailAddress!
+  collection: String!
+}
+
+type usersLoginResult {
+  token: String
+  user: User
+  exp: Int
+}
+
+type usersResetPassword {
+  token: String
+  user: User
+}
+
+input mutationExampleInput {
+  relation_that_works_in_graphql: String
+  relation_that_does_not_work_in_graphql: Int
+  someField: String
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationExampleUpdateInput {
+  relation_that_works_in_graphql: String
+  relation_that_does_not_work_in_graphql: Int
+  someField: String
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationCollectionWithCustomIdInput {
+  id: Int!
+  someField: String
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationCollectionWithCustomIdUpdateInput {
+  someField: String
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationCollectionWithoutCustomIdInput {
+  someField: String
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationCollectionWithoutCustomIdUpdateInput {
+  someField: String
+  updatedAt: String
+  createdAt: String
+}
